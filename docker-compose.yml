@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  db:
+    image: mongo
+    restart: on-failure
+    volumes:
+      - proshop:/data/db
+  nginx:
+    depends_on:
+      - api
+      - client
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - "80:80"
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - './backend/.env'
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      - WDS_SOCKET_PORT=0
+    ports:
+      - "3000:3000"
+volumes:
+  proshop:
