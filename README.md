@@ -2,7 +2,7 @@
 
 > eCommerce platform built with the MERN stack & Redux.
 
-<img src="./frontend/public/images/screens.png">
+<img src="https://github.com/ksobitov/proshop-dockerized/raw/main/frontend/public/images/screens.png">
 
 This project is part of my [MERN Stack From Scratch | eCommerce Platform](https://www.traversymedia.com/mern-stack-from-scratch) course. It is a full-featured shopping cart with PayPal & credit/debit payments. See it in action at https://www.proshopdemo.dev
 
@@ -42,10 +42,10 @@ This is version 2.0 of the app, which uses Redux Toolkit.
 
 ### Env Variables
 
-Rename the `.env.example` file to `.env` and add the following
+Open `cd backend` Rename the `.env-example` file to `.env` and add the following
 
 ```
-NODE_ENV = development
+NODE_ENV = production
 PORT = 5000
 MONGO_URI = your mongodb uri
 JWT_SECRET = 'abc123'
@@ -66,7 +66,6 @@ npm install
 ### Run
 
 ```
-
 # Run frontend (:3000) & backend (:5000)
 npm run dev
 
@@ -105,4 +104,42 @@ john@email.com (Customer)
 
 jane@email.com (Customer)
 123456
+```
+
+### Docker Setup
+Open `backend` folder and run this command:
+```
+docker image build .
+```
+
+Open `frontend` folder and run this command:
+```
+docker image build .
+```
+
+Open `nginx` folder and run this command:
+```
+docker image build .
+```
+
+Create volume for MongoDB Database
+```
+docker volume create proshop
+```
+
+After this run this command:
+```
+docker compose up
+```
+
+Seed database in docker container
+```
+docker container ls
+```
+Find `proshop-api` and run this command
+
+```
+docker container exec -it <proshop-api> sh
+
+npm run data:import
 ```
